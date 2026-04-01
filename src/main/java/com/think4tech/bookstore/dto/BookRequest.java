@@ -1,0 +1,25 @@
+package com.think4tech.bookstore.dto;
+
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+@Data
+public class BookRequest {
+
+    private String title;
+    private String slug;
+    private String description;
+    private String isbn;
+    private String language;
+    private String coverImageUrl;
+    private String digitalFileUrl;
+    private BigDecimal price;
+    private Boolean isFree;
+    private Integer stockQuantity;
+    private String format;
+    private String status;
+    private Double averageRating;
+    private Integer totalReviews;
+    private Long createdByAdminId; // only pass ID
+}

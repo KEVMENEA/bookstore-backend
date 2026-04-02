@@ -10,25 +10,20 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "categories")
-public class Category {
+@Table(name = "authors")
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Category name is required")
+    @NotBlank(message = "Author name is Required")
     @Column(nullable = false)
     private String name;
 
 
-    @NotBlank(message = "Slug is required")
-    @Column(nullable = false, unique = true)
-    private String slug;
+    @Column(columnDefinition = "TEXT")
+    private String bio;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_category_id")
-    private Category parentCategory;
+
 }
-
-

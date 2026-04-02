@@ -23,7 +23,6 @@ public class BookServiceImpl implements BookService {
     private final AdminRepository adminRepository;
     private final BookMapper bookMapper;
 
-
     @Override
     public BookResponse create(BookRequest request) {
         Admin admin = adminRepository.findById(request.getCreatedByAdminId())
@@ -40,7 +39,7 @@ public class BookServiceImpl implements BookService {
         Book existing = bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
-       bookMapper.updateEntity(existing, request);
+        bookMapper.updateEntityFromRequest(request, existing);
 
         Book updated = bookRepository.save(existing);
         return bookMapper.toResponse(updated);
@@ -50,6 +49,7 @@ public class BookServiceImpl implements BookService {
     public void delete(Long id) {
         Book existing = bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
+
         bookRepository.delete(existing);
     }
 
@@ -63,6 +63,7 @@ public class BookServiceImpl implements BookService {
     public BookResponse getById(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
+
         return bookMapper.toResponse(book);
     }
 
@@ -70,6 +71,7 @@ public class BookServiceImpl implements BookService {
     public BookResponse getBySlug(String slug) {
         Book book = bookRepository.findBySlug(slug)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
+
         return bookMapper.toResponse(book);
     }
 }

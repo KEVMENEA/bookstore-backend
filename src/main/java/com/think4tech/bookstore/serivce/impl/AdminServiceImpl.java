@@ -18,7 +18,6 @@ public class AdminServiceImpl implements AdminService {
     private final AdminMapper adminMapper;
 
     public AdminResponse create(AdminRequest request) {
-
         adminRepository.findByEmail(request.getEmail()).ifPresent(a -> {
             throw new RuntimeException("Email already exists");
         });
@@ -42,8 +41,7 @@ public class AdminServiceImpl implements AdminService {
 
         Admin admin = adminRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
-
-        admin.setStatus("INACTIVE"); // or DELETED
+        admin.setStatus("INACTIVE");
 
         adminRepository.save(admin);
     }
@@ -54,7 +52,7 @@ public class AdminServiceImpl implements AdminService {
         Admin admin = adminRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
 
-        adminMapper.updateEntity(admin, request);
+        adminMapper.updateEntity(request, admin);
         return adminMapper.toResponse(adminRepository.save(admin));
     }
 }

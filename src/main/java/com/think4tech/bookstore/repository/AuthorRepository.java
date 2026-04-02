@@ -1,0 +1,12 @@
+package com.think4tech.bookstore.repository;
+
+import com.think4tech.bookstore.entity.Author;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface AuthorRepository extends JpaRepository<Author, Long> {
+    Optional<Author> findByNameIgnoreCase(String name);
+
+    Long Id(Long id);
+}

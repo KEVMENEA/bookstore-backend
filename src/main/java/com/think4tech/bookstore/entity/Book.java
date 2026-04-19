@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -13,7 +15,6 @@ import java.math.BigDecimal;
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_book_slug", columnNames = "slug")
         })
-@AttributeOverride(name = "id", column = @Column(name = "book_id"))
 public class Book extends BaseEntity {
 
     @Column(name = "title", nullable = false)
@@ -61,5 +62,24 @@ public class Book extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "created_by_admin_id")
     private Admin createdByAdmin;
+
+    @ManyToMany
+    @JoinTable(
+            name = "book_categories",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id")
+    )
+    private Set<Category> categories = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "book_authors",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id")
+    )
+    private Set<Author> authors = new HashSet<>();
+
+    @ManyToMany(mappedBy = "wishlistBooks")
+    private Set<User> wishlistedByUsers = new HashSet<>();
 
 }

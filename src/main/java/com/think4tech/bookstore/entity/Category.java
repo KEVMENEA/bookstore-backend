@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -29,6 +32,9 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
+
+    @ManyToMany(mappedBy = "categories")
+    private Set<Book> books = new HashSet<>();
 }
 
 

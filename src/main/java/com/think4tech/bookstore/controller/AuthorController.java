@@ -3,8 +3,7 @@ package com.think4tech.bookstore.controller;
 
 import com.think4tech.bookstore.dto.AuthorRequestDTO;
 import com.think4tech.bookstore.dto.AuthorResponseDTO;
-import com.think4tech.bookstore.mapper.AuthorMapper;
-import com.think4tech.bookstore.serivce.AuthorService;
+import com.think4tech.bookstore.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

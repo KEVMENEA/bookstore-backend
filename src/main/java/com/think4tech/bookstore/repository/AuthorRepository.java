@@ -9,4 +9,6 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
     Optional<Author> findByNameIgnoreCase(String name);
 
     Long Id(Long id);
+
+    Long id(Long id);
 }

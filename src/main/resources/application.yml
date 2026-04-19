@@ -1,6 +1,11 @@
 spring:
   application:
     name: think4tech
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+      enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5433/BookStore
     username: postgres
@@ -23,3 +28,10 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+file:
+  upload-dir: uploads/books
+
+jwt:
+  secret: your-256-bit-secret-key-at-least-32-characters-long-123456
+  expiration-ms: 86400000

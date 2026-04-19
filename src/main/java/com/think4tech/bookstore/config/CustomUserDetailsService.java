@@ -1,0 +1,29 @@
+package com.think4tech.bookstore.config;
+
+import com.think4tech.bookstore.entity.User;
+import com.think4tech.bookstore.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class CustomUserDetailsService implements UserDetailsService {
+
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        // Since we're using email for login, we search the email column
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getEmail()) // Use email as the principal name
+                .password(user.getPasswordHash())
+                .roles(user.getRole().name().replace("ROLE_", ""))
+                .build();
+    }
+}

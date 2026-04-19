@@ -2,7 +2,7 @@ package com.think4tech.bookstore.controller;
 
 import com.think4tech.bookstore.dto.AdminRequest;
 import com.think4tech.bookstore.dto.AdminResponse;
-import com.think4tech.bookstore.serivce.AdminService;
+import com.think4tech.bookstore.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

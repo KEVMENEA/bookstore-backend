@@ -7,9 +7,10 @@ spring:
       max-request-size: 50MB
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5433/BookStore
-    username: postgres
-    password:
+    # Use host.docker.internal to connect to the database on your Windows machine from inside Docker
+    url: jdbc:postgresql://${DB_HOST:host.docker.internal}:${DB_PORT:5433}/${DB_NAME:BookStore}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

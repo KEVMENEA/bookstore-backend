@@ -7,13 +7,14 @@ spring:
       max-request-size: 50MB
       enabled: true
   datasource:
-    # Supports full URL from Render or individual parts
+    # Supports full URL OR individual parts. 
+    # For Render/Supabase/Neon, ensure the URL ends with ?sslmode=require if using external host
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:host.docker.internal}:${DB_PORT:5433}/${DB_NAME:BookStore}}
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:}
+    password: ${DB_PASSWORD:1234}
     driver-class-name: org.postgresql.Driver
     hikari:
-      connection-timeout: 30000
+      connection-timeout: 60000
       maximum-pool-size: 5
   jpa:
     hibernate:
@@ -23,9 +24,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-        # Adding SSL might be required for some cloud providers
-        # temp disabled for Render internal connections
-        # jdbc.postgresql.ssl: true
 
 server:
   port: ${PORT:8290}

@@ -54,9 +54,11 @@ public class AuthorServiceImpl implements AuthorService {
 
         author.setName(dto.getName());
         author.setBio(dto.getBio());
+        author.setImageUrl(dto.getImageUrl());
 
         return authorMapper.toResponse(authorRepository.save(author));
     }
+
 
     @Override
     public void delete(Long id) {

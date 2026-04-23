@@ -11,4 +11,5 @@ public class AuthorRequestDTO {
     @NotBlank(message = "Author name is required")
     private String name;
     private String bio;
+    private String imageUrl;
 }

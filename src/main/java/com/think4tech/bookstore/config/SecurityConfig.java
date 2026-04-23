@@ -30,31 +30,35 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // public pages
+                        // Public resources
                         .requestMatchers("/", "/index.html", "/css/**", "/js/**", "/error").permitAll()
 
-                        // auth
+                        // Auth endpoints (public)
                         .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-                        .requestMatchers("/api/auth/me").authenticated()
 
-                        // public bookstore read APIs
+                        // Swagger / API docs
+                        .requestMatchers("/v3/api-docs/**", "/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+
+                        // Public GET APIs
                         .requestMatchers(HttpMethod.GET, "/api/books/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/authors/**").permitAll()
 
-                        // authenticated user APIs
+                        // Allow preflight requests
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // Authenticated endpoints
+                        .requestMatchers("/api/auth/me").authenticated()
                         .requestMatchers("/api/my-books/**").authenticated()
                         .requestMatchers("/api/orders/**").authenticated()
                         .requestMatchers("/api/carts/**").authenticated()
                         .requestMatchers("/api/user-books/**").authenticated()
                         .requestMatchers("/api/payments/**").authenticated()
 
-                        // admin APIs
+                        // Admin endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
-                        // preflight
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
+                        // Everything else requires authentication
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

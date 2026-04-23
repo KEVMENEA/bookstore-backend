@@ -1,5 +1,6 @@
 package com.think4tech.bookstore.mapper;
 
+import com.think4tech.bookstore.dto.AuthorSummaryDTO;
 import com.think4tech.bookstore.dto.BookDetailResponse;
 import com.think4tech.bookstore.dto.BookRequest;
 import com.think4tech.bookstore.dto.BookResponse;
@@ -16,7 +17,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.Collection;
 import java.util.List;
-
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
@@ -28,12 +28,12 @@ public interface BookMapper {
     Book toEntity(BookRequest request, Admin admin);
 
     @Mapping(source = "id", target = "bookId")
-    @Mapping(source = "authors", target = "authors", qualifiedByName = "mapAuthorsToNames")
+    @Mapping(source = "authors", target = "authors", qualifiedByName = "mapAuthorsToSummary")
     @Mapping(source = "categories", target = "categories", qualifiedByName = "mapCategoriesToNames")
     BookResponse toResponse(Book book);
 
     @Mapping(source = "id", target = "bookId")
-    @Mapping(source = "authors", target = "authors", qualifiedByName = "mapAuthorsToNames")
+    @Mapping(source = "authors", target = "authors", qualifiedByName = "mapAuthorsToSummary")
     @Mapping(source = "categories", target = "categories", qualifiedByName = "mapCategoriesToNames")
     BookDetailResponse toDetailResponse(Book book);
 
@@ -44,13 +44,16 @@ public interface BookMapper {
     @Mapping(target = "categories", ignore = true)
     void updateEntityFromRequest(BookRequest request, @MappingTarget Book book);
 
-    @Named("mapAuthorsToNames")
-    default List<String> mapAuthorsToNames(Collection<Author> authors) {
+    @Named("mapAuthorsToSummary")
+    default List<AuthorSummaryDTO> mapAuthorsToSummary(Collection<Author> authors) {
         if (authors == null) {
             return List.of();
         }
         return authors.stream()
-                .map(Author::getName)
+                .map(author -> AuthorSummaryDTO.builder()
+                        .name(author.getName())
+                        .imageUrl(author.getImageUrl())
+                        .build())
                 .toList();
     }
 

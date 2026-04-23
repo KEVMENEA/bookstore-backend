@@ -1,5 +1,6 @@
 package com.think4tech.bookstore.dto;
 
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,12 +16,13 @@ public class BookResponse {
     private String title;
     private String slug;
     private String description;
+    private String digitalFileUrl;
     private String coverImageUrl;
     private BigDecimal price;
     private Boolean isFree;
     private Integer stockQuantity;
     private Double averageRating;
     private Integer totalReviews;
-    private List<String> authors;
+    private List<AuthorSummaryDTO> authors;
     private List<String> categories;
 }

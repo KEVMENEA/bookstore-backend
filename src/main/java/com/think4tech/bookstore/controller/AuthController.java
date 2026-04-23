@@ -7,6 +7,7 @@ import com.think4tech.bookstore.dto.UserResponse;
 import com.think4tech.bookstore.service.AuthService;
 import com.think4tech.bookstore.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +36,22 @@ public class AuthController {
     public UserResponse getCurrentUser(Authentication authentication) {
         String email = authentication.getName();
         return userService.getUserByEmail(email);
+    }
+
+    // ✅ Get all users (Admin only)
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Page<UserResponse> getAllUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return userService.getAllUsers(page, size);
+    }
+
+    // ✅ Get user by ID (Admin only)
+    @GetMapping("/users/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserResponse getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 }

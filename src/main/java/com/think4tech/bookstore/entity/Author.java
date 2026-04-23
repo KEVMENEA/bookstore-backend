@@ -28,6 +28,9 @@ public class Author {
     @Column(columnDefinition = "TEXT")
     private String bio;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
 }

@@ -1,14 +1,14 @@
 package com.think4tech.bookstore.dto;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Builder
 public class BookDetailResponse {
 
@@ -27,6 +27,6 @@ public class BookDetailResponse {
     private String status;
     private Double averageRating;
     private Integer totalReviews;
-    private List<String> authors;
+    private List<AuthorSummaryDTO> authors;
     private List<String> categories;
 }

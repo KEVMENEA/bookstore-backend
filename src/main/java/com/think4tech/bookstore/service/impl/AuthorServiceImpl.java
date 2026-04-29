@@ -52,9 +52,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = authorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Author not found", id));
 
-        author.setName(dto.getName());
-        author.setBio(dto.getBio());
-        author.setImageUrl(dto.getImageUrl());
+        authorMapper.updateEntityFromDto(dto, author);
 
         return authorMapper.toResponse(authorRepository.save(author));
     }

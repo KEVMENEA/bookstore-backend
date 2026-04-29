@@ -4,6 +4,7 @@ package com.think4tech.bookstore.controller;
 import com.think4tech.bookstore.dto.AuthorRequestDTO;
 import com.think4tech.bookstore.dto.AuthorResponseDTO;
 import com.think4tech.bookstore.service.AuthorService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @PostMapping
-    public ResponseEntity<AuthorResponseDTO> create(@RequestBody AuthorRequestDTO dto) {
+    public ResponseEntity<AuthorResponseDTO> create(@Valid @RequestBody AuthorRequestDTO dto) {
         return ResponseEntity.ok(authorService.create(dto));
     }
 
@@ -32,7 +33,7 @@ public class AuthorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AuthorResponseDTO> update(@PathVariable Long id, @RequestBody AuthorRequestDTO dto) {
+    public ResponseEntity<AuthorResponseDTO> update(@PathVariable Long id, @Valid @RequestBody AuthorRequestDTO dto) {
         return ResponseEntity.ok(authorService.update(id, dto));
     }
 
